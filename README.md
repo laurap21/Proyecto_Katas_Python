@@ -20,8 +20,8 @@ Generalmente, una kata presenta un problema o desafío de programación que el p
 ## 🗂️ ESTRUCTURA DEL PROYECTO
 ```
 📂 DataProject_Logica_KatasPython
-├── ConsultasProyecto.sql              # Archivo sql con las consultas realizadas en el proyecto.
-├── EnunciadoDataProjectPython.pdf     # Archivo PDF con los enunciados de las katas a desarrollar    
+├── ProyectoKatas.ipynb                # Archivo de Jupyter Notebook con las katas resueltas.
+├── EnunciadoDataProjectPython.pdf     # Archivo PDF con los enunciados de las katas a desarrollar.    
 └── README.md
 ```
 
