@@ -1,4 +1,4 @@
-# PROYECTO KATAS PYTHON 🐍
+# 🐍 PROYECTO KATAS PYTHON 
 
 ## 📌 INTRODUCCIÓN
 Este proyecto forma parte del curso de **Data Analytics** y consiste en la realización de una serie de Katas planteadas, descritas en los apartados siguientes.
