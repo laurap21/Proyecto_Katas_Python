@@ -21,6 +21,7 @@ Generalmente, una kata presenta un problema o desafío de programación que el p
 ```
 📂 DataProject_Logica_KatasPython
 ├── ProyectoKatas.ipynb                # Archivo de Jupyter Notebook con las katas resueltas.
+├── ProyectoKatas.py                   # Archivo .py con las katas resueltas.
 ├── EnunciadoDataProjectPython.pdf     # Archivo PDF con los enunciados de las katas a desarrollar.    
 └── README.md
 ```
