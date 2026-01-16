@@ -59,25 +59,29 @@ lista_numeros2
 # Para la correcta definición de la función se ha empleado un control de errores que genera un TypeError si la lista que se le pasa como parámetro contiene algún elemento distinto a un string. 
 # En la función se emplea el método *.lower()* para cada iterable de la lista para normalizar mayúsculas y minúsculas. 
 # Si la lista contiene solamente strings, la función devuelve la lista solicitada, es decir, una lista solo con las palabras de la lista original que contengan la palabra objetivo.
-# - Puntos de mejora: ¿qué ocurre cuando la *palabra_objetivo* no es una palabra? Hace falta comprobación también. También puedo ignorarlo y no incluir ese iterable en la lista.
+# - Puntos de mejora: ¿qué ocurre cuando la *palabra_objetivo* no es una palabra? Hace falta comprobación también. También puedo ignorarlo y no incluir ese iterable en la lista --> CORREGIDO
+#
+# COMENTARIOS CORRECCIÓN:
+# - No se valida que palabra_objetivo sea un string, lo que puede provocar errores.
+# - El nombre del parámetro lista pisa el nombre de la función built-in list, lo cual es mala práctica.
 
-# DEFINICIÓN DE LA FUNCIÓN
+# DEFINICIÓN DE LA FUNCIÓN - CORREGIDA
 
-def filtrar_palabra2(palabra_objetivo, lista):
+def filtrar_palabra2(palabra_objetivo, lista_palabras):
 
     """ La función busca una palabra objetivo en una lista de palabras y devuelve una nueva lista con las palabras originales que contentan la palabra objetivo.
         ARGUMENTOS:
         - palabra_objetivo (str) --> palabra a buscar en la lista de palabras.
-        - lista (list) --> conjunto de palabras a comparar con la palabra objetivo
+        - lista_palabras (list) --> conjunto de palabras a comparar con la palabra objetivo
         RETURN:
         - lista_objetivo (list) --> lista con las palabras que cumplen la condución de la función"""
     
-    if not all(isinstance(x, str) for x in lista):
+    if not all(isinstance(x, str) for x in lista_palabras):
         raise TypeError('La lista debe contener solo strings')
     
     lista_objetivo = []
     
-    for palabra in lista:
+    for palabra in lista_palabras:
         if palabra_objetivo.lower() in palabra.lower():
             lista_objetivo.append(palabra)
     return lista_objetivo
@@ -165,17 +169,23 @@ comparacion_notas(notas)
 # 6. Escribe una función que calcule el factorial de un número de manera recursiva.
 # Matemáticamente, solo aplica a a números enteros y positivos.
 # Para evitar un error recursivo (RecursionError) y que se entre en un bucle infinito, se pone un *if* para cuando n valga 1. En ese caso, devuelve 1.
+#
+# COMENTARIOS CORRECCIÓN:
+# - No se controla que n sea entero positivo.
+# - Si n es 0 o negativo, la función entra en recursión infinita.
 
-# DEFINCIÓN DE LA FUNCIÓN
+# DEFINCIÓN DE LA FUNCIÓN - CORREGIDA
 
 def factorial(n):
     """ 
-    La función calcula el factorial de n.
+    La función calcula el factorial de n, siempre que n sea un número entero positivo.
     ARGUMENTOS:
     - n (int) --> número entero positivo.
     RETURN:
     - int --> valor del factorial calculado de n 
     """
+    if not isinstance(n, int) or n > 1:
+        raise ValueError('El número deve ser entero positivo.')
     if n == 1:
         return 1
     else:
@@ -320,6 +330,9 @@ conjunto_caracteres = 'Pepa'
 lista_tuplas_caracteres(conjunto_caracteres)
 
 # 14. Crea una función que retorne las palabras de una lista de palabras que comience con una letra en específico. Usa la función *filter()*.
+#
+# COMENTARIOS CORRECCIÓN:
+# - No se normaliza letra_especifica a minúsculas, lo que puede provocar resultados incorrectos.
 
 # DEFINICIÓN DE LA FUNCIÓN
 
@@ -331,6 +344,7 @@ def lista_letra_especifica(lista_palabras, letra_especifica):
         REUTURN:
         - list --> lista de palabras que comienzan por la letra específica."""
     
+    letra_especifica = letra_especifica.lower()
     return list(filter(lambda x: x[0].lower() == letra_especifica, lista_palabras))
 
 
@@ -340,9 +354,12 @@ letra_especifica = 'p'
 lista_letra_especifica(lista_palabras, letra_especifica)
 
 # 15. Crea una función *lambda* que sume 3 a cada número de una lista dada.
+#
+# COMENTARIOS CORRECCIÓN:
+# - La lambda ignora el parámetro recibido y una una variable externa (lista_numeros3).
 
 # DEFINCIÓN DE LA FUNCIÓN LAMBDA
-sumar_tres = lambda lista: list(map(lambda x: x+3, lista_numeros3))
+sumar_tres = lambda lista: list(map(lambda x: x+3, lista))
 
 lista_numeros3 = [1, 2, 3, 4, 5]
 sumar_tres(lista_numeros3)
@@ -573,6 +590,9 @@ buscar_nombre()
 
 # 32. Crea una función que tome un nombre completo y una lista de empleados, busque el nombre completo en la lista y devuelve el puesto del empleado si está en la lista, de lo contrario, devuelve un mensaje indicando que la persona no trabaja aquí.
 # En este caso no se hace normalización de mayúsculas y minúsculas.
+#
+# COMENTARIOS CORRECCIÓN:
+# - Las comillas dentro de f-string general un SyntaxError
 
 # Variables iniciales: str --> nombre_completo a buscar // lista de diccionarios de los trabajadores donde se guarda también su puesto.
 nombre_completo = 'Dani Pastora'
@@ -594,7 +614,7 @@ def puesto_trabajador(trabajadores, nombre_completo):
     
     for trabajador in trabajadores:
         if trabajador['nombre'] == nombre_completo:
-            return f'Puesto: {trabajador['puesto']}'
+            return f"Puesto: {trabajador['puesto']}"
 
     return 'La persona buscada no trabaja aquí.'
 
@@ -673,6 +693,8 @@ arbol1.nueva_rama(2)
 arbol1.quitar_rama(2)
 # 7. Obtener información sobre el árbol:
 arbol1.info_arbol()
+
+
 # 36. Crea la clase *UsuarioBanco*, representa a un usuario de un banco con su nombre, saldo y si tiene o no cuenta corriente. Proporciona métodos para realizar operaciones como retirar dinero, transferir dinero desde otro usuario y agregar dinero al saldo.
 # Código a seguir:
 # 1. Inicializar un usuario con su nombre, saldo y si tiene o no cuenta corriente mediante *True* y *False*.
@@ -752,6 +774,10 @@ print(usuario2.info_usuarios())
 # 
 # Caso de uso:
 # Comprueba el funcionamiento completo de la función *procesar_texto*.
+#
+# COMENTARIOS CORRECCIÓN:
+# - No se usan los argumentos *args.
+# - Se usan variables globales en lugar de los argumentos recibidos.
 
 texto = 'Hola, me llamo Laura y tengo 30 años. Tengo una hermana. Ella se llama Raquel y tiene 27 años.'
 
@@ -795,7 +821,7 @@ def eliminar_palabra(texto, palabra_eliminada):
     """La función toma una palabra y la elimina. No elimina espacios ni signos de puntuación."""
     return texto.replace(palabra_eliminada, '')
 
-# FUNCIÓN procesar_texto
+# FUNCIÓN procesar_texto - CORREGIDA
 def procesar_texto(texto, funcion, *args):
     """ La función toma un texto, una opción de función entre 'contar', 'reemplazar' o 'eliminar' y el número de argumentos correspondiente.
         ARGUMENTOS:
@@ -811,12 +837,12 @@ def procesar_texto(texto, funcion, *args):
     elif funcion == 'reemplazar':
         if len(args) != 2:
             raise ValueError('La función reemplazar_palabras necesita dos argumentos: palabra original y palabra nueva.')
-        return reemplazar_palabras(texto, palabra_original, palabra_nueva)
+        return reemplazar_palabras(texto, args[0], args[1])
     
     elif funcion == 'eliminar':
         if len(args) != 1:
             raise ValueError('La función eliminar necesita 1 argumento.')
-        return eliminar_palabra(texto, palabra_eliminada)
+        return eliminar_palabra(texto, args[0])
     
     else:
         raise ValueError('Función no válida.')
@@ -835,11 +861,14 @@ procesar_texto(texto,'eliminar', palabra_eliminada)
 # - Noche --> de 22h a 7h.
 #     - De 0h a 7h.
 #     - De 22h a 0h.
+#
+# COMENTARIOS CORRECCIÓN:
+# - La condición 22 <= hora < 0 nunca se cumple.
 
 
 hora = int(input('Por favor, introduce una hora (0-23): '))
 
-if 0 <= hora < 7 or 22 <= hora < 0:
+if 0 <= hora < 7 or 22 <= hora <= 23:
     print('Es de noche.')
 elif 7 <= hora < 15:
     print('Es de día.')
@@ -849,6 +878,9 @@ else:
     print('Hora no válida.')
 
 # 39. Escribe un programa que determine qué calificación en texto tiene un alumno en base a su calificación numérica. Las reglas de calificación son: (0-69) insificiente, (70-79) bien, (80-89) muy bien, (90-100) excelente.
+# 
+# COMENTARIOS CORRECCIÓN:
+# - El rango range(90,100) no incluye el 100.
 
 calificacion_alumno = 70
 
@@ -856,7 +888,7 @@ rangos = {
     range(0, 70): 'Insuficiente',
     range(70, 80): 'Bien',
     range(80, 90): 'Muy bien',
-    range(90, 100): 'Excelente'
+    range(90, 101): 'Excelente'
 }
 
 for rango, texto in rangos.items():
@@ -864,6 +896,9 @@ for rango, texto in rangos.items():
         print(f'La calificación del alumno es: {texto}')
 
 # 40. Escribe una función que tome dos parámetros: *figura* (una cadena que puede ser 'rectángulo', 'círculo' o 'triángulo') y *datos* (una tupla con los datos necesario para calcular el área de la figura).
+#
+# COMENTARIOS CORRECCIÓN:
+# - No se valida la longitud de la tupla de datos, lo que puede causar errores silenciosos.
 
 # DEFINICIÓN DE LA FUNCIÓN
 from math import pi
@@ -871,16 +906,23 @@ from math import pi
 def calcular_area(figura, datos):
 
     if figura == 'rectangulo':
-        area = datos[0] * datos[1]
+        if len(datos) != 2:
+            raise ValueError('Rectángulo necesita base y altura.')
+        return datos[0] * datos[1]
+    
     elif figura == 'triangulo':
-        area = (datos[0]*datos[1]/2)
+        if len(datos) != 2:
+            raise ValueError('Triángulo necesita base y altura.')
+        return (datos[0]*datos[1]/2)
+    
     elif figura == 'circulo':
-        area = pi*datos[0]**2
+        if len(datos) != 1:
+            raise ValueError('Círculo necesita el radio.')
+        return pi*datos[0]**2
 
     else:
         raise ValueError('Figura no incluida.')
     
-    return area
 
 figura = 'triangulo'
 datos = (7, 8)
